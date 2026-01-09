@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
-import { IgrejaModule } from './igreja/igreja.module';
+import { IgrejaModule } from './igrejas/igreja.module';
 import { HinosModule } from './hinos/hinos.module';
 
 @Module({
