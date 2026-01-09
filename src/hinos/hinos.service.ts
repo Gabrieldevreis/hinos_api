@@ -1,25 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateHinosDto } from './dto/create-hinos.dto';
-import { randomUUID } from 'crypto';
+import { Hino } from './interfaces/hinos.interface';
 
 @Injectable()
 export class HinosService {
-    findAll() {
-        throw new Error('Method not implemented.');
-    }
-    create(dto: CreateHinosDto){
-        return{
-            id:randomUUID(),
-            igreja_id: dto.igreja_id,
-            hino_numero: dto.hino_numero,
-            vezes_chamado: dto.vezes_chamado
-        }
+  private hinos: Hino[] = [];
+
+  criar(nome: string, igrejaId: number) {
+    const hino = {
+      id: this.hinos.length + 1,
+      nome,
+      igrejaId,
+      chamadas: 0,
+    };
+
+    this.hinos.push(hino);
+    return hino;
+  }
+
+  listar() {
+    return this.hinos;
+  }
+
+  chamarHino(id: number) {
+    const hino = this.hinos.find(h => h.id === id);
+
+    if (!hino) {
+      return { erro: 'Hino não encontrado' };
     }
 
-    update(id:string,){
-        let update_number = 10
-        return{
-            vezes_chamado:update_number +=1
-        }
-    }
+    hino.chamadas += 1;
+    return hino;
+  }
 }
